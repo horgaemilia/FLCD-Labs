@@ -1,0 +1,36 @@
+The words - predefined tokens are specified between “ and “:
+Program = “/*” DeclList StmtList “/*”
+DeclList = { [Declaration   “;”] }
+Declaration = Type IDENTIFIER
+Type = Type1 | ArrayDec
+Type1 = “BOOL” | “CHAR” | “INT”
+ArrayDec = "ARRAY" "[" nr "]" "OF" type1
+nr = digits{digitsWZero}
+digits = 1|2…|9
+digitsWZero = 0|digits
+StmtList = { (Stmt  “;”)}
+Stmt =  Simplstmt | Structstmt
+Simplstmt = AssignStmt | IoStmt
+AssignStmt = “LET” IDENTIFIER “=” Expression “;”
+Expression = Expression ( “+” | “-“) term | term | String | Bool
+Bool = “true” | “false”
+String = Character | Character {Character}
+Character = Letter | Digit
+ Letter = “A”|”B”|…|”Z”|”a”|”b”|….|”z”
+ Digit = “0”|”1”|”2”|…|”9”
+
+term = term (“*”|”/”) factor | factor; 
+ factor = Zero| [“-“]Digits{DigitsWithZero}
+ Zero = 0
+ Digits = 1|2|…|9
+ DigitsWithZero = Zero|Digits
+Iostmt = “LET” IDENTIFIER “=” IOExpr “;”
+IOExpr = “READ()” | “PRINT()” | “EXIT(“ + Expression + “)”
+structStmt = stmtList | ifStmt | forStmt
+ifStmt = “CHECK” ConditionList “{“ stmt “}” [“ELSE” “{“ stmt “}”]
+ConditionList = condition | condition ( “AND”|”OR”) {condition}
+Condition = expression RELATION expression
+RELATION = "<" | "<=" | "=" | "<>" | ">=" | ">"
+forStmt = “go” + “(“ + IDENTIFIER | AssignStmt + “,” + Condition + “,” + AssignStmt+”)” +”{“ stmtList  + “}”
+
+

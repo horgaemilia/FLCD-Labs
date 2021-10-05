@@ -1,0 +1,30 @@
+a.Special Symbols:
+	- operators: +    -    ==    =    >=   <=   %  *  /   
+	- separators:   /*  */    #    space   ;    ,   ()  {}  :  
+         -  reserved words:  int  char  string  check  else  print  go let exit and or 
+
+b. Identifiers 
+    - a sequence of letters and  digits, such that the first character is a letter; the rule is:  
+       Identifier = Letter{DigitsLetters}
+       Letter = “A”|”B”|…|”Z”|”a”|”b”|….|”z”
+      Digits = 0|1|2|…|9
+       DigitsLetters = Letter|Digits
+c. Constants
+     1. integer : contains digits but can not start with 0
+        Integer = Zero| [“-“]Digits{DigitsWithZero}
+       Zero = 0
+      Digits = 1|2|…|9
+     DigitsWithZero = Zero|Digits
+   
+  2. Character: a letter or a digit
+       Character = Letter | Digit
+       Letter = “A”|”B”|…|”Z”|”a”|”b”|….|”z”
+     Digit = “0”|”1”|”2”|…|”9”
+
+ 3. String: a sequence of characters 
+    String= Character | Character {Character}
+
+
+   
+
+
