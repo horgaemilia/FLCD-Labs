@@ -1,0 +1,73 @@
+p1: compute maximum of 3 numbers    
+/*
+  int a;
+  int b;
+  int c;
+  let a = read();
+  let b = read();
+  let c = read();
+  check a>=b and a>=c:
+	print(a);
+  check b>=a and b>=c:
+	print(b);
+  check c>=a and c>=b:
+	print(c);
+*/
+
+p1err:
+/*
+   int a;
+   'b;
+   int c;
+  let a = read();
+  let b = read();
+  let c = read();
+  check a@b and a@c:
+	print(a);
+  check b>=a and b>=c:
+	print(b);
+  check c>=a and c>=b:
+	print(c);
+*/
+
+
+p2: verify if a number is prime
+/*
+   int a;
+   bool c;
+   int i;
+   let a = read();
+   let i = 2;
+   check a == 2:
+	exit(true);
+   check a == 1 or a == 0:
+	exit(false);
+   let c = false;
+   go(i ; i < n; let i = i+1)
+   {
+	check a % i == 0:
+	   exit(false);
+   }
+   exit(true)
+*/
+
+
+p3: compute the sum of n numbers
+/*
+    int s;
+    int i;
+    int l;
+    int n;
+   let l = read();
+   let s = 0;
+   let i = 0;
+   go( i; i < n; let i = i+1)
+   {
+	let n = read();
+        let s = s + n;	
+   }
+   print(s); 
+*/
+
+
+
