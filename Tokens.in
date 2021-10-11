@@ -20,21 +20,21 @@ Tokens:
 {
 }
 “
-LET
-CHAR
-INT
-AND
-OR
-CHECK
-IF
-ELSE
-ARRAY
-GO
-ELSE
-PRINT
-READ
-EXIT
-TRUE
-FALSE
+let
+char
+int
+and
+or
+check
+if
+else
+array
+go
+else
+print
+read
+exit
+true
+false
 
   

@@ -7,7 +7,7 @@ b. Identifiers
     - a sequence of letters and  digits, such that the first character is a letter; the rule is:  
        Identifier = Letter{DigitsLetters}
        Letter = “A”|”B”|…|”Z”|”a”|”b”|….|”z”
-      Digits = 0|1|2|…|9
+      Digits = "0"|"1"|"2"|…|"9"
        DigitsLetters = Letter|Digits
 c. Constants
      1. integer : contains digits but can not start with 0

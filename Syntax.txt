@@ -1,6 +1,6 @@
-The words - predefined tokens are specified between “ and “:
+The words - predefined tokens and char/string literals are specified between “ and “:
 Program = “/*” DeclList StmtList “/*”
-DeclList = { [Declaration   “;”] }
+DeclList =  {Declaration   “;” }
 Declaration = Type IDENTIFIER
 Type = Type1 | ArrayDec
 Type1 = “BOOL” | “CHAR” | “INT”
@@ -8,8 +8,8 @@ ArrayDec = "ARRAY" "[" nr "]" "OF" type1
 nr = digits{digitsWZero}
 digits = 1|2…|9
 digitsWZero = 0|digits
-StmtList = { (Stmt  “;”)}
-Stmt =  Simplstmt | Structstmt
+StmtList = { Stmt }
+Stmt =  (Simplstmt | Structstmt) ";"
 Simplstmt = AssignStmt | IoStmt
 AssignStmt = “LET” IDENTIFIER “=” Expression “;”
 Expression = Expression ( “+” | “-“) term | term | String | Bool
@@ -31,6 +31,6 @@ ifStmt = “CHECK” ConditionList “{“ stmt “}” [“ELSE” “{“ stmt
 ConditionList = condition | condition ( “AND”|”OR”) {condition}
 Condition = expression RELATION expression
 RELATION = "<" | "<=" | "=" | "<>" | ">=" | ">"
-forStmt = “go” + “(“ + IDENTIFIER | AssignStmt + “,” + Condition + “,” + AssignStmt+”)” +”{“ stmtList  + “}”
+forStmt = “go”  “(“ IDENTIFIER | AssignStmt  “,”  Condition  “,” + AssignStmt”)” ”{“ stmtList  “}”
 
 
