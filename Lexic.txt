@@ -1,3 +1,4 @@
+The separator for string/character literals is ""
 a.Special Symbols:
 	- operators: +    -    ==    =    >=   <=   %  *  /   
 	- separators:   /*  */    #    space   ;    ,   ()  {}  :  
