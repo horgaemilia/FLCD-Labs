@@ -10,6 +10,7 @@ public class HashTable {
     private int initialSize;
     private int size;
     private float loadFactor;
+    int index = 0;
     ArrayList<HashNode<String,Integer>> table = new ArrayList<>();
 
     public HashTable()
@@ -47,11 +48,12 @@ public class HashTable {
     {
         //System.out.println("added");
         int position = hashFunction(key);
-        HashNode<String,Integer> node = getItemOnPosition(position);
-        HashNode<String,Integer> addNode = new HashNode<>(key,position);
+        HashNode<String,Integer> node = getBucket(position);
+        HashNode<String,Integer> addNode = new HashNode<>(key,index);
         if(node == null)
         {
             table.set(position,addNode);
+            index++;
             size ++;
         }
         else
@@ -61,12 +63,15 @@ public class HashTable {
                 node = node.getNext();
             }
             node.setNext(addNode);
+            index++;
             size++;
         }
         float load =(float)size/initialSize;
         if(load > loadFactor)
+        {
             reHash();
-        return position;
+        }
+        return addNode.value;
     }
 
 
@@ -74,7 +79,7 @@ public class HashTable {
     public int getPosition(String key)
     {
         int position = hashFunction(key);
-        HashNode<String, Integer> node = getItemOnPosition(position);
+        HashNode<String, Integer> node = getBucket(position);
         if(node == null)
             position = add(key);
         else
@@ -82,7 +87,7 @@ public class HashTable {
             while(node!=null)
             {
                 if(node.key.equals(key))
-                    return position;
+                    return node.value;
                 else
                     node = node.getNext();
             }
@@ -91,7 +96,7 @@ public class HashTable {
         return position;
     }
 
-    public HashNode<String,Integer> getItemOnPosition(int position)
+    public HashNode<String,Integer> getBucket (int position)
     {
         return this.table.get(position);
     }
