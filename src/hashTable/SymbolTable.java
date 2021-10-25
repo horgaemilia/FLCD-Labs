@@ -2,18 +2,21 @@ package hashTable;
 
 import com.sun.jdi.Value;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class HashTable {
+public class SymbolTable {
 
     private int initialSize;
     private int size;
     private float loadFactor;
-    int index = 0;
     ArrayList<HashNode<String,Integer>> table = new ArrayList<>();
+    private String fileName = "ST.out";
 
-    public HashTable()
+    public SymbolTable()
     {
         initialSize = 10;
         size = 0;
@@ -49,11 +52,10 @@ public class HashTable {
         //System.out.println("added");
         int position = hashFunction(key);
         HashNode<String,Integer> node = getBucket(position);
-        HashNode<String,Integer> addNode = new HashNode<>(key,index);
+        HashNode<String,Integer> addNode = new HashNode<>(key,position);
         if(node == null)
         {
             table.set(position,addNode);
-            index++;
             size ++;
         }
         else
@@ -63,15 +65,15 @@ public class HashTable {
                 node = node.getNext();
             }
             node.setNext(addNode);
-            index++;
             size++;
         }
-        float load =(float)size/initialSize;
+        /*float load =(float)size/initialSize;
         if(load > loadFactor)
         {
             reHash();
         }
-        return addNode.value;
+        */
+        return position;
     }
 
 
@@ -106,5 +108,41 @@ public class HashTable {
         int sum = key.chars().sum();
         //System.out.println(sum);
         return  (sum %initialSize);
+    }
+
+    public void writeToFile()
+    {
+        try
+        {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
+            for(var node : table)
+            {
+                if(node == null)
+                {
+                    writer.write("null \n");
+                }
+                else
+                {
+                    if(node.getNext() == null)
+                        writer.write(node.key + ": " + node.value + "\n");
+                    else {
+                        writer.write(node.key + ": " + node.value + " -> " );
+                        node = node.getNext();
+                        while (node != null) {
+                            writer.write(node.key + ": " + node.value);
+                            if(node.getNext() != null)
+                                writer.write("->");
+                            node = node.getNext();
+                        }
+                        writer.write("\n");
+                    }
+                }
+            }
+            writer.close();
+        }
+        catch (IOException ignored)
+        {
+            System.out.println(ignored);
+        }
     }
 }

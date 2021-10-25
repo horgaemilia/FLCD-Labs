@@ -1,0 +1,18 @@
+/*
+   int a;
+   bool c;
+   int i;
+   let a = read();
+   let i = 2;
+   check a == 2:
+	exit(true);
+   check a == 1 or a == 0:
+	exit(false);
+   let c = false;
+   go(i ; i < n; let i = i+1)
+   {
+	check a % i == 0:
+	   exit(false);
+   }
+   exit(true)
+*/
