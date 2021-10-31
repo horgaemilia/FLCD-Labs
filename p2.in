@@ -9,7 +9,7 @@
    check a == 1 or a == 0:
 	exit(false);
    let c = false;
-   go(i ; i < n; let i = i+1)
+   go(i ; i < n; let i = i + 1)
    {
 	check a % i == 0:
 	   exit(false);

@@ -1,5 +1,7 @@
 package pif;
 
+import hashTable.PositionTuple;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,10 +13,10 @@ public class Pif {
 
     public void addPif(String token)
     {
-        entrances.add(new PifEntrance(token,-1));
+        entrances.add(new PifEntrance(token,new PositionTuple( -1,0)));
     }
 
-    public void addPif(String token,int position)
+    public void addPif(String token,PositionTuple position)
     {
         entrances.add(new PifEntrance(token,position));
     }

@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-       /* SymbolTable symbolTable = new SymbolTable();
+        /*SymbolTable symbolTable = new SymbolTable();
         System.out.println(symbolTable.getPosition("a"));
         System.out.println(symbolTable.getPosition("123"));
         System.out.println(symbolTable.getPosition("ad"));

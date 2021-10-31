@@ -5,7 +5,6 @@
 %
 /*
 */
-#
 ;
 =
 >
@@ -21,6 +20,7 @@
 “
 let
 char
+bool
 int
 and
 or

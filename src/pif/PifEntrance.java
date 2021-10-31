@@ -1,10 +1,12 @@
 package pif;
 
+import hashTable.PositionTuple;
+
 public class PifEntrance {
     private String token;
-    private int position;
+    private PositionTuple position;
 
-    public PifEntrance(String token,int position)
+    public PifEntrance(String token, PositionTuple position)
     {
         this.position = position;
         this.token = token;
@@ -12,6 +14,6 @@ public class PifEntrance {
 
     @Override
     public String toString() {
-        return token + ":" + position;
+        return token + " " + position.toString();
     }
 }

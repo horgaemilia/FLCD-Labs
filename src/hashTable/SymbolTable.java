@@ -13,7 +13,7 @@ public class SymbolTable {
     private int initialSize;
     private int size;
     private float loadFactor;
-    ArrayList<HashNode<String,Integer>> table = new ArrayList<>();
+    ArrayList<HashNode<String,PositionTuple>> table = new ArrayList<>();
     private String fileName = "ST.out";
 
     public SymbolTable()
@@ -29,7 +29,7 @@ public class SymbolTable {
 
     private void reHash()
     {
-        ArrayList<HashNode<String,Integer>> aux = new ArrayList<>();
+        ArrayList<HashNode<String,PositionTuple>> aux = new ArrayList<>();
         aux.addAll(table);
         table = new ArrayList<>();
         initialSize = initialSize*2;
@@ -37,7 +37,7 @@ public class SymbolTable {
         {
             table.add(null);
         }
-        for(HashNode<String,Integer> node : aux)
+        for(HashNode<String,PositionTuple> node : aux)
         {
             while(node!= null)
             {
@@ -47,24 +47,28 @@ public class SymbolTable {
         }
     }
 
-    public int add(String key)
+    public PositionTuple add(String key)
     {
         //System.out.println("added");
-        int position = hashFunction(key);
-        HashNode<String,Integer> node = getBucket(position);
-        HashNode<String,Integer> addNode = new HashNode<>(key,position);
+        PositionTuple position = new PositionTuple(hashFunction(key),0);
+        HashNode<String,PositionTuple> node = getBucket(position.getBucketPosition());
+        HashNode<String,PositionTuple> addNode = new HashNode<>(key,position);
         if(node == null)
         {
-            table.set(position,addNode);
+            table.set(position.getBucketPosition(),addNode);
             size ++;
         }
         else
         {
+            int inBucketPosition = 1;
             while (node.getNext()!= null)
             {
                 node = node.getNext();
+                inBucketPosition++;
             }
             node.setNext(addNode);
+            addNode.value.setInBucketPosition(inBucketPosition);
+            position.setInBucketPosition(inBucketPosition);
             size++;
         }
         /*float load =(float)size/initialSize;
@@ -78,10 +82,10 @@ public class SymbolTable {
 
 
 
-    public int getPosition(String key)
+    public PositionTuple getPosition(String key)
     {
-        int position = hashFunction(key);
-        HashNode<String, Integer> node = getBucket(position);
+        PositionTuple position = new PositionTuple(hashFunction(key),0);
+        HashNode<String, PositionTuple> node = getBucket(position.getBucketPosition());
         if(node == null)
             position = add(key);
         else
@@ -89,16 +93,20 @@ public class SymbolTable {
             while(node!=null)
             {
                 if(node.key.equals(key))
+                {
                     return node.value;
+                }
                 else
+                {
                     node = node.getNext();
+                }
             }
             position = add(key);
         }
         return position;
     }
 
-    public HashNode<String,Integer> getBucket (int position)
+    public HashNode<String,PositionTuple> getBucket (int position)
     {
         return this.table.get(position);
     }
@@ -124,12 +132,12 @@ public class SymbolTable {
                 else
                 {
                     if(node.getNext() == null)
-                        writer.write(node.key + ": " + node.value + "\n");
+                        writer.write(node.key + ": " + node.value.toString() + "\n");
                     else {
-                        writer.write(node.key + ": " + node.value + " -> " );
+                        writer.write(node.key + ": " + node.value.toString() + " -> " );
                         node = node.getNext();
                         while (node != null) {
-                            writer.write(node.key + ": " + node.value);
+                            writer.write(node.key + ": " + node.value.toString());
                             if(node.getNext() != null)
                                 writer.write("->");
                             node = node.getNext();
