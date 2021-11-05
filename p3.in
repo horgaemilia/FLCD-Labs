@@ -1,0 +1,15 @@
+/*
+    int s;
+    int i;
+    int l;
+    int n;
+   let l = read();
+   let s = 0;
+   let i = 0;
+   go( i; i < n; let i = i+1)
+   {
+	let n = read();
+        let s = s + n;
+   }
+   print(s);
+*/
