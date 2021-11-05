@@ -1,6 +1,7 @@
 package scanner;
 
 import errors.LexicalError;
+import finiteAutomata.FA;
 import hashTable.PositionTuple;
 import hashTable.SymbolTable;
 import pif.Pif;
@@ -19,6 +20,8 @@ public class ProgramScanner {
     private Pif pif;
     private String programFile;
     private Pattern splitPattern;
+    private FA integers = new FA("src/FAinteger.in");
+    private FA identifiers = new FA("src/FAidentifiers.in");
 
     public ProgramScanner(String programFile)
     {
@@ -29,7 +32,6 @@ public class ProgramScanner {
         this.acceptedTokens = new ArrayList<>();
         initializeTokens();
         splitPattern = Pattern.compile("(?<=[\\s*(\\\\*)|[^a-zA-Z0-9]+\\s*])|(?=[\\s*[^a-zA-Z0-9]+\\s*])");
-
     }
 
     private void initializeTokens()
@@ -65,7 +67,26 @@ public class ProgramScanner {
                 pif.addPif(toAnalyze);
                 continue;
             }
-            Matcher matcher = Utils.integerConstant.matcher(toAnalyze);
+            //old integer
+            /*Matcher matcher = Utils.integerConstant.matcher(toAnalyze);
+            boolean match = matcher.matches();
+            if(match)
+            {
+                PositionTuple position = symbolTable.getPosition(toAnalyze);
+                pif.addPif("constant",position);
+                continue;
+            }*/
+            boolean check = integers.checkSequence(toAnalyze);
+            if(check)
+            {
+                PositionTuple position = symbolTable.getPosition(toAnalyze);
+                pif.addPif("constant",position);
+                continue;
+            }
+
+
+            //string
+            Matcher matcher = Utils.stringConstant.matcher(toAnalyze);
             boolean match = matcher.matches();
             if(match)
             {
@@ -73,17 +94,9 @@ public class ProgramScanner {
                 pif.addPif("constant",position);
                 continue;
             }
-            //string
-            matcher = Utils.stringConstant.matcher(toAnalyze);
-            match = matcher.matches();
-            if(match)
-            {
-                PositionTuple position = symbolTable.getPosition(toAnalyze);
-                pif.addPif("constant",position);
-                continue;
-            }
             //identifier
-            matcher = Utils.identifier.matcher(toAnalyze);
+            //old identifiers
+           /* matcher = Utils.identifier.matcher(toAnalyze);
             match = matcher.matches();
             if(match)
             {
@@ -92,25 +105,33 @@ public class ProgramScanner {
                 continue;
             }
 
+            */
+            check = identifiers.checkSequence(toAnalyze);
+            if(check)
+            {
+                PositionTuple position = symbolTable.getPosition(toAnalyze);
+                pif.addPif("identifier",position);
+                continue;
+            }
             boolean added = false;
             for (int index = 0; index < Utils.separators.size(); index++)
             {
                 String separator = Utils.separators.get(index);
                 if (toAnalyze.contains(separator))
                 {
+                    //System.out.println(separator);
                     String separator_regex = Utils.separatorsRegex.get(index);
                     String splitPattern = "(?<=[" + separator_regex+"])" +"|(?=["+separator_regex+"])";
+                    //System.out.println(splitPattern);
                     String[] splits = toAnalyze.split(splitPattern,-1);
                     for(int i =splits.length-1;i>=0;i--)
                     {
                         unclassified.addFirst(splits[i]);
                     }
-
                     added = true;
                     break;
                 }
             }
-
             if (added)
                 continue;
             throw new LexicalError("at line:" + lineCount + " token " + toAnalyze + " could not be recognised");
@@ -128,46 +149,6 @@ public class ProgramScanner {
             {
                 lineCount++;
                 String line = reader.nextLine();
-               /* String[] result = line.split(splitPattern.pattern());
-                for(var token: result)
-                {
-                    if(token.matches("\\s*"))
-                        continue;
-                   /* var transformedToken = token.split(" ")[0];
-                    if(acceptedTokens.contains(token))
-                    {
-                        pif.addPif(token);
-                        continue;
-                    }
-                    //now we check to see if it is constant
-                    //int
-                    Matcher matcher = Utils.integerConstant.matcher(token);
-                    boolean match = matcher.matches();
-                    if(match)
-                    {
-                        PositionTuple position = symbolTable.getPosition(token);
-                        pif.addPif("constant",position);
-                        continue;
-                    }
-                    //string
-                    matcher = Utils.stringConstant.matcher(token);
-                    match = matcher.matches();
-                    if(match)
-                    {
-                        PositionTuple position = symbolTable.getPosition(token);
-                        pif.addPif("constant",position);
-                        continue;
-                    }
-                    //identifier
-                    matcher = Utils.identifier.matcher(token);
-                    match = matcher.matches();
-                    if(match)
-                    {
-                        PositionTuple position = symbolTable.getPosition(token);
-                        pif.addPif("identifier",position);
-                        continue;
-                    }
-                    */
                     try
                     {
                         analyzeLine(line,lineCount);
