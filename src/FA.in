@@ -1,0 +1,16 @@
+States
+p
+q
+r
+Alphabet
+0
+1
+InitialState
+p
+FinalState
+r
+Transitions
+p -> 0 -> q
+p -> 0 -> p
+q -> 1 -> r
+r -> 0 -> r
