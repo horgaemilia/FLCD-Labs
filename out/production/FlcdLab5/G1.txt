@@ -1,0 +1,13 @@
+Terminals
+0
+1
+Nonterminals
+S
+A
+B
+Start
+S
+Productions
+S0->0A|1S
+A->1S|0B
+B->0B|0
