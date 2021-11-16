@@ -1,0 +1,46 @@
+primType -> Bool | Int | Float | Char | String
+array -> [primType]
+type -> primType | array
+
+idFst -> a | b | c | _
+idSnd -> a | b | c | | 0 | 1 | 2 | _
+idTail -> idSnd | idSnd idTail
+id -> idFst idTail
+
+intLit -> 0 | withSign
+digit -> 0 | 1 | 2 | 3
+digits -> digit | digit digits
+nonZero -> 1 | 2 | 3
+withSign -> addOp nonZero digits | nonZero digits
+
+readExpr -> read primType
+boolLit -> false | true
+atomExpr -> id | boolLit | intLit | readExpr | (expr)
+
+factor -> atomExpr . length | atomExpr
+mulOp -> * | / | %
+term -> factor mulOp term | factor
+addOp -> + | -
+cmpTerm -> term addOp cmpTerm | term
+cmpOp -> == | != | < | > | <= | >=
+logicTerm -> cmpTerm cmpOp logicTerm | cmpTerm
+logicOp -> && | "||"
+arrayTerm -> logicTerm logicOp arrayTerm | logicTerm
+arrayTerms -> arrayTerm "," arrayTerms | arrayTerm | ϵ
+expr -> arrayTerm | [ arrayTerms ]
+
+printStmt -> print expr
+typeSig -> : type | ϵ
+declStmt -> let id typeSig = expr
+assignStmt -> id = expr
+simpleStmt -> printStmt | declStmt | assignStmt
+stmtWithComma -> simpleStmt ;
+elseBlock -> else compStmt | ϵ
+ifStmt -> if expr compStmt elseBlock
+whileStmt -> while expr compStmt
+forStmt -> for id in expr compStmt
+compStmt -> { stmts }
+stmt -> stmtWithComma | ifStmt | whileStmt | forStmt | compStmt
+stmts -> stmt stmts | stmt
+
+program -> stmts
