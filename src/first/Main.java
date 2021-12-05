@@ -27,7 +27,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Grammar grammar = new Grammar("src/G1.txt");
+        Grammar grammar = new Grammar("src/G2.txt");
         Scanner in = new Scanner(System.in);
         int option = 6;
         boolean notFinished = true;

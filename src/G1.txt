@@ -8,6 +8,6 @@ B
 Start
 S
 Productions
-S0->0A|1S
-A->1S|0B
-B->0B|0
+S 0->0 A|1 S
+A->1 S|0 B
+B->0 B|0

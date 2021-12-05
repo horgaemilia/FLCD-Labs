@@ -86,34 +86,15 @@ public class Grammar {
 
     private List<String> splitRuleLine(String line)
     {
-        List<String> generatedElements = new ArrayList<>();
-        Deque<String> toAnalyze = new LinkedList<>();
-        toAnalyze.addFirst(line);
-        while (!toAnalyze.isEmpty())
+        String[] generatedElements = line.split(" ");
+        List<String> elements = new ArrayList<>();
+        for(int i=0;i<generatedElements.length;i++)
         {
-            String stringToAnalyze = toAnalyze.getFirst();
-            toAnalyze.removeFirst();
-            if(this.nonterminalSymbols.contains(stringToAnalyze) || this.terminalSymbols.contains(stringToAnalyze))
-            {
-                generatedElements.add(stringToAnalyze);
-                continue;
-            }
-            //now we see if it contains any nonterminalSymbolsAndWeSplit
-            for(int i=0;i<this.nonterminalSymbols.size();i++)
-            {
-                String nonTerminal = this.nonterminalSymbols.get(i);
-                if(stringToAnalyze.contains(nonTerminal))
-                {
-                    String splitPattern = "(?<=[" + nonTerminal+"])" +"|(?=["+nonTerminal+"])";
-                    String[] splits = stringToAnalyze.split(splitPattern);
-                    for(int j =splits.length-1;j>=0;j--)
-                    {
-                        toAnalyze.addFirst(splits[j]);
-                    }
-                }
-            }
+            String element = generatedElements[i];
+            element = element.replace(" ","");
+            elements.add(element);
         }
-        return generatedElements;
+        return elements;
     }
 
     public List<Production> getProductionsForNonTerminal(String nonTerminal)
@@ -127,6 +108,11 @@ public class Grammar {
 
     public List<String> getNonterminalSymbols() {
         return nonterminalSymbols;
+    }
+
+    public List<String> getFirstProduction(String nonTerminal)
+    {
+        return this.productions.stream().filter(production -> production.getLeft().size()==1 && production.getLeft().get(0).equals(nonTerminal)).findFirst().get().getOrderedSymbols();
     }
 
     public String getStartingSymbol() {
