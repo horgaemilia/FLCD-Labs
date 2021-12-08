@@ -11,6 +11,15 @@ public class ParserHelper {
         this.nonTerminal = nonTerminal;
     }
 
+    @Override
+    public String toString() {
+        return "ParserHelper{" +
+                "index=" + index +
+                ", element='" + element + '\'' +
+                ", nonTerminal='" + nonTerminal + '\'' +
+                '}';
+    }
+
     public void setIndex(int index)
     {
         this.index = index;

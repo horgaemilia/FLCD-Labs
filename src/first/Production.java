@@ -34,6 +34,13 @@ public class Production {
         this.left = right;
     }
 
+    public String getOrderedSymbolsAsAString()
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        this.orderedSymbols.forEach(stringBuilder::append);
+        return stringBuilder.toString();
+    }
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();

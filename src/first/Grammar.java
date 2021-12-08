@@ -115,6 +115,10 @@ public class Grammar {
         return this.productions.stream().filter(production -> production.getLeft().size()==1 && production.getLeft().get(0).equals(nonTerminal)).findFirst().get().getOrderedSymbols();
     }
 
+    public String getFirstProductionAsString(String nonTerminal)
+    {
+        return this.productions.stream().filter(production -> production.getLeft().size()==1 && production.getLeft().get(0).equals(nonTerminal)).findFirst().get().getOrderedSymbolsAsAString();
+    }
     public String getStartingSymbol() {
         return startingSymbol;
     }

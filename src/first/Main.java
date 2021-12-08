@@ -26,41 +26,44 @@ public class Main {
     }
 
     public static void main(String[] args) {
-
-        Grammar grammar = new Grammar("src/G2.txt");
+        Grammar grammar = new Grammar("src/G1.txt");
+        ParserOutput parserOutput = new ParserOutput("src/G1.txt");
         Scanner in = new Scanner(System.in);
-        int option = 6;
-        boolean notFinished = true;
-        while (notFinished) {
-            printMenu();
-            option = in.nextInt();
-            switch (option) {
-                case 0 -> {
-                    notFinished = false;
-                }
-                case 1 -> {
-                    var nonterminalSymbols = grammar.getNonterminalSymbols();
-                    System.out.println(nonterminalSymbols);
-                }
-                case 2 -> {
-                    var terminalSymbols = grammar.getTerminalSymbols();
-                    System.out.println(terminalSymbols);
-                }
-                case 3 -> {
-                    var startingSymbol = grammar.getStartingSymbol();
-                    System.out.println(startingSymbol);
-                }
-                case 4 -> {
-                    var productions = grammar.getProductions();
-                    productions.forEach(p -> System.out.println(p.toString()));
-                }
-                case 5 -> {
-                    getProductionsForNonterminal(grammar);
-                }
-                case 6 -> {
-                    System.out.println(grammar.isContextFree() ? "Is context-free" : "Is NOT context-free");
-                }
-            }
-        }
+        String sequence = in.next();
+        System.out.println(parserOutput.checkSequence(sequence));
+
+//        int option = 6;
+//        boolean notFinished = true;
+//        while (notFinished) {
+//            printMenu();
+//            option = in.nextInt();
+//            switch (option) {
+//                case 0 -> {
+//                    notFinished = false;
+//                }
+//                case 1 -> {
+//                    var nonterminalSymbols = grammar.getNonterminalSymbols();
+//                    System.out.println(nonterminalSymbols);
+//                }
+//                case 2 -> {
+//                    var terminalSymbols = grammar.getTerminalSymbols();
+//                    System.out.println(terminalSymbols);
+//                }
+//                case 3 -> {
+//                    var startingSymbol = grammar.getStartingSymbol();
+//                    System.out.println(startingSymbol);
+//                }
+//                case 4 -> {
+//                    var productions = grammar.getProductions();
+//                    productions.forEach(p -> System.out.println(p.toString()));
+//                }
+//                case 5 -> {
+//                    getProductionsForNonterminal(grammar);
+//                }
+//                case 6 -> {
+//                    System.out.println(grammar.isContextFree() ? "Is context-free" : "Is NOT context-free");
+//                }
+//            }
+//        }
     }
 }
