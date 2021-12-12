@@ -49,7 +49,11 @@ public class Grammar {
                 }
                 switch (mode) {
                     case "Terminals" -> {
-                        this.terminalSymbols.add(line);
+                        if(line.equals("\"\""))
+                            this.terminalSymbols.add(" ");
+                        else {
+                            this.terminalSymbols.add(line);
+                        }
                     }
                     case "Nonterminals" -> {
                         this.nonterminalSymbols.add(line);
@@ -92,7 +96,11 @@ public class Grammar {
         {
             String element = generatedElements[i];
             element = element.replace(" ","");
-            elements.add(element);
+            if(element.equals("\"\""))
+                elements.add(" ");
+            else {
+                elements.add(element);
+            }
         }
         return elements;
     }

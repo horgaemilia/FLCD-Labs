@@ -1,0 +1,25 @@
+Terminals
+a
+b
+c
+""
+;
+int
+bool
+char
+Nonterminals
+P
+SL
+S
+D
+T
+I
+Start
+P
+Productions
+P->SL
+SL->S SL|S
+S->D
+D->T "" I "" ;
+I->a|b|c
+T->int|char|bool

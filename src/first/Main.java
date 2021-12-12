@@ -26,7 +26,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Grammar grammar = new Grammar("src/G1.txt");
+        Grammar grammar = new Grammar("src/G3.txt");
         ParserOutput parserOutput = new ParserOutput("src/G1.txt");
         Scanner in = new Scanner(System.in);
         String sequence = in.next();
