@@ -13,11 +13,7 @@ public class ParserHelper {
 
     @Override
     public String toString() {
-        return "ParserHelper{" +
-                "index=" + index +
-                ", element='" + element + '\'' +
-                ", nonTerminal='" + nonTerminal + '\'' +
-                '}';
+        return element;
     }
 
     public void setIndex(int index)

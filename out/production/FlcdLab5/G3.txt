@@ -18,8 +18,8 @@ Start
 P
 Productions
 P->SL
-SL->S SL|S
+SL->S|S SL
 S->D
-D->T "" I "" ;
+D->T "" I ;
 I->a|b|c
 T->int|char|bool

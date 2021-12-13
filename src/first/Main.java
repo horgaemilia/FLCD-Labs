@@ -29,7 +29,7 @@ public class Main {
         Grammar grammar = new Grammar("src/G3.txt");
         ParserOutput parserOutput = new ParserOutput("src/G1.txt");
         Scanner in = new Scanner(System.in);
-        String sequence = in.next();
+        String sequence = in.nextLine();
         System.out.println(parserOutput.checkSequence(sequence));
 
 //        int option = 6;

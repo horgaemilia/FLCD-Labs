@@ -39,8 +39,9 @@ public class Parser {
         this.state = State.NORMAL;
         this.grammar = grammar;
         this.index = 0;
-        this.inputStack.addFirst(new ParserHelper(0,grammar.getStartingSymbol(),"S"));
+        this.inputStack.addFirst(new ParserHelper(0,grammar.getStartingSymbol(),grammar.getStartingSymbol()));
         this.derivations.add(grammar.getStartingSymbol());
+        System.out.println(this.toString());
     }
 
     @Override
@@ -57,12 +58,12 @@ public class Parser {
     public void momentaryInsuccess()
     {
         this.state = State.BACK;
-       // System.out.println("momentaryInsuccess"+this.toString());
+       System.out.println("momentaryInsuccess"+this.toString());
     }
     public void success()
     {
         this.state = State.FINAL;
-       // System.out.println("success");
+        System.out.println("success");
     }
 
     //WHEN: head of input stack is a nonterminal
@@ -84,7 +85,7 @@ public class Parser {
         {
             this.inputStack.addFirst(new ParserHelper(0,firstProduction.get(i),nonTerminal.getElement()));
         }
-       // System.out.println("expand"+this.toString());
+        System.out.println("expand"+this.toString());
         //now we compute the derivation string
         String previousElement = derivations.get(derivations.size()-1);
         String production = previousElement.replaceFirst(nonTerminal.getElement(),grammar.getFirstProductionAsString(nonTerminal.getElement()));
@@ -92,17 +93,17 @@ public class Parser {
     }
 
     //WHEN: head of input stack is a terminal = current symbol from input
-    public void advance(int indexToAdd)
+    public void advance()
     {
        // System.out.println("advance"+this.toString());
         //we need to increase the index
-        this.index +=indexToAdd;
+        this.index +=this.inputStack.getFirst().getElement().length();
         //we remove the first element from the input stack
         ParserHelper element = this.inputStack.getFirst();
         this.inputStack.removeFirst();
         //we add the element to the working stack
         this.workingStack.addLast(element);
-     //   System.out.println("advance"+this.toString());
+        System.out.println("advance"+this.toString());
     }
 
 
@@ -111,13 +112,13 @@ public class Parser {
     {
         this.state = State.BACK;
         //we need to decrease the index
-        this.index -=1;
+        this.index -=this.workingStack.getLast().getElement().length();
         //we remove the last element from the working stack
         ParserHelper terminal = this.workingStack.getLast();
         this.workingStack.removeLast();
         //we add the element to the input stack
         this.inputStack.addFirst(terminal);
-      //  System.out.println("back"+this.toString());
+        System.out.println("back"+this.toString());
     }
 
 
@@ -219,6 +220,6 @@ public class Parser {
             String newProduction = previousElement.replaceFirst(element.getElement(),productionString);
             derivations.add(newProduction);
         }
-        //System.out.println("anotherTry"+this.toString());
+        System.out.println("anotherTry"+this.toString());
     }
 }
