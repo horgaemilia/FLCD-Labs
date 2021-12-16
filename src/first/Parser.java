@@ -97,7 +97,7 @@ public class Parser {
     {
        // System.out.println("advance"+this.toString());
         //we need to increase the index
-        this.index +=this.inputStack.getFirst().getElement().length();
+        this.index +=1;
         //we remove the first element from the input stack
         ParserHelper element = this.inputStack.getFirst();
         this.inputStack.removeFirst();
@@ -112,7 +112,7 @@ public class Parser {
     {
         this.state = State.BACK;
         //we need to decrease the index
-        this.index -=this.workingStack.getLast().getElement().length();
+        this.index -=1;
         //we remove the last element from the working stack
         ParserHelper terminal = this.workingStack.getLast();
         this.workingStack.removeLast();

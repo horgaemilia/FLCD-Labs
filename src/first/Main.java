@@ -1,5 +1,7 @@
 package first;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,6 +18,26 @@ public class Main {
 
     }
 
+    private static List<String> convertFileToList(String filename)
+    {
+        List<String> list = new ArrayList<>();
+        File program = new File(filename);
+        try {
+            Scanner reader = new Scanner(program);
+            while (reader.hasNextLine()) {
+                String line = reader.nextLine();
+                String[] lineSplitBySpace = line.split(" ");
+                String targetElement = lineSplitBySpace[0];
+                list.add(targetElement);
+            }
+            reader.close();
+        }
+        catch (Exception ignored){
+            ignored.printStackTrace();
+        }
+        return list;
+    }
+
     private static void getProductionsForNonterminal(Grammar grammar) {
         System.out.println("Please enter your symbol");
         Scanner in = new Scanner(System.in);
@@ -27,11 +49,17 @@ public class Main {
 
     public static void main(String[] args) {
         Grammar grammar = new Grammar("src/G3.txt");
-        ParserOutput parserOutput = new ParserOutput("src/G1.txt");
-        Scanner in = new Scanner(System.in);
-        String sequence = in.nextLine();
+        ParserOutput parserOutput = new ParserOutput("src/G1.txt","src/out1.txt");
+        String filename = "src/seq.txt";
+        List<String> sequence = convertFileToList(filename);
+        System.out.println(sequence);
         System.out.println(parserOutput.checkSequence(sequence));
 
+        ParserOutput parserOutput2 = new ParserOutput("src/G3.txt","src/out2.txt");
+        String filename2 = "src/pif.txt";
+        List<String> sequence2 = convertFileToList(filename2);
+        System.out.println(sequence2);
+        System.out.println(parserOutput2.checkSequence(sequence2));
 //        int option = 6;
 //        boolean notFinished = true;
 //        while (notFinished) {

@@ -1,0 +1,1 @@
+[P]->[/*SL*/]->[/*SSL*/]->[/*DSL*/]->[/*Tidentifier;SL*/]->[/*intidentifier;SL*/]->[/*intidentifier;S*/]->[/*intidentifier;D*/]->[/*intidentifier;Tidentifier;*/]->[/*intidentifier;boolidentifier;*/]->[/*intidentifier;boolidentifier;*/]->

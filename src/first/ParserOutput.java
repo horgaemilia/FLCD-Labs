@@ -1,21 +1,50 @@
 package first;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.List;
 
 public class ParserOutput {
     private Grammar grammar;
     private Parser parser;
+    private String outputFile;
 
-    public ParserOutput(String grammarFile) {
+    public ParserOutput(String grammarFile,String outputFile) {
         this.grammar = new Grammar(grammarFile);
         this.parser = new Parser(this.grammar);
+        this.outputFile = outputFile;
     }
 
-    public boolean checkSequence(String sequence) {
-        System.out.println(sequence.length());
+
+    public void writeDerivationToFile()
+    {
+        List<String> derivation = this.parser.getDerivations();
+        StringBuilder stringBuilder = new StringBuilder();
+        derivation.forEach(d->stringBuilder.append("[").append(d).append("]->"));
+        try
+        {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
+            writer.write(stringBuilder.toString());
+            writer.close();
+        }
+        catch (Exception ignored){}
+    }
+
+    public void writeErrorToFile()
+    {
+        try
+        {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
+            writer.write("not accepted");
+            writer.close();
+        }
+        catch (Exception ignored){}
+    }
+
+    public boolean checkSequence(List<String> sequence) {
         while ((!this.parser.getState().equals(State.FINAL)) && (!this.parser.getState().equals(State.ERROR))) {
             if (this.parser.getState().equals(State.NORMAL)) {
-                if (this.parser.getIndex() == sequence.length() && this.parser.getInputStack().isEmpty())
+                if (this.parser.getIndex() == sequence.size() && this.parser.getInputStack().isEmpty())
                 {
                     this.parser.success();
                     //System.out.println(parser.getDerivations() );
@@ -33,20 +62,13 @@ public class ParserOutput {
                                 //System.out.println(parser.getDerivations());
                             }
                         } else {
-                            if (sequence.length() <= this.parser.getIndex())
+                            if (sequence.size() <= this.parser.getIndex())
                             {   this.parser.momentaryInsuccess();
                                 //System.out.println(parser.getDerivations());
                             }
                             else {
-                                char elementAtIndex = sequence.charAt(this.parser.getIndex());
-                                int headInputStackLength = headInputStack.getElement().length();
-                                StringBuilder stringBuilder = new StringBuilder();
-                                if(this.parser.getIndex()+headInputStackLength <= sequence.length())
-                                {
-                                    for(int i=0;i<headInputStackLength;i++)
-                                        stringBuilder.append(sequence.charAt(this.parser.getIndex()+i));
-                                }
-                                if (headInputStack.getElement().equals(stringBuilder.toString())) {
+                                String elementAtIndex = sequence.get(this.parser.getIndex());
+                                if (headInputStack.getElement().equals(elementAtIndex)) {
                                     { this.parser.advance();
                                        // System.out.println(parser.getDerivations());
                                     }
@@ -76,9 +98,11 @@ public class ParserOutput {
         if (this.parser.getState().equals(State.ERROR))
         {
             System.out.println(parser.getDerivations());
+            writeErrorToFile();
             return false;
         }
         System.out.println(parser.getDerivations());
+        writeDerivationToFile();
         return true;
     }
 }

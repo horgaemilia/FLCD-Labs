@@ -1,0 +1,75 @@
+Terminals
+identifier
+constant
++
+-
+*
+/
+%
+/*
+*/
+#
+;
+=
+>
+==
+>=
+<
+<=
+:
+(
+)
+{
+}
+“
+let
+char
+int
+and
+or
+check
+if
+else
+array
+go
+else
+print
+read
+exit
+true
+false
+bool
+Nonterminals
+P
+SL
+S
+D
+T
+A
+E
+T
+I
+IoE
+IF
+F
+CL
+C
+R
+Start
+P
+Productions
+P->/* SL */
+SL->S SL|S
+S->D|A|I|IF|F
+D->T identifier ;
+T->bool|char|int
+A->let identifier = E ;
+E->E + T|E - T|T|true|false
+T->T * constant|T / constant|T * identifier|T / identifier|constant|identifier
+I->let identifier = IoE ;
+IoE->read ( )|print ( )|exit ( E )
+IF->check CL { S }|check CL { S } else { S }
+CL->C|C and CL|C or CL
+C->E R E
+R-><|<=|==|<>|>=|>
+F->go ( + identifier , C , A ) { SL }|go ( + A , C , A ) { SL }
